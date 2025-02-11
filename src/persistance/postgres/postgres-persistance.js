@@ -24,9 +24,10 @@ export const createPostgresPersister = (uri) => {
     user: url.username,
     password: url.password,
     port: url.port,
-    ssl: true
+    ssl: {
+        rejectUnauthorized: false // Required for AWS RDS SSL
+    }
   });
-
   pool.on('error', (err, client) => {
     console.error('Pool connection failure to postgres:', err, client);
   });
