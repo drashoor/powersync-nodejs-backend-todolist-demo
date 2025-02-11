@@ -23,7 +23,8 @@ export const createPostgresPersister = (uri) => {
     database: url.pathname.split('/')[1],
     user: url.username,
     password: url.password,
-    port: url.port
+    port: url.port,
+    ssl: true
   });
 
   pool.on('error', (err, client) => {
