@@ -74,6 +74,7 @@ export const createPostgresPersister = (uri) => {
             console.log('STATEMENT');
             console.log(statement);
             console.log(with_id);
+            console.log(JSON.stringify(with_id));
             await client.query(statement, [JSON.stringify(with_id)]);
             
           } else if (op.op == 'PATCH') {
