@@ -45,11 +45,15 @@ export const createPostgresPersister = (uri) => {
           const table = escapeIdentifier(op.table);
           if (op.op == 'PUT') {
             const data = op.data;
+            console.log(data);
             const with_id = { ...data, id: op.id ?? op.data.id };
 
+            console.log(with_id);
             const columnsEscaped = Object.keys(with_id).map(escapeIdentifier);
+            console.log(columnsEscaped);
             const columnsJoined = columnsEscaped.join(', ');
 
+            console.log(columnsJoined);
             let updateClauses = [];
 
             for (let key of Object.keys(data)) {
@@ -69,7 +73,11 @@ export const createPostgresPersister = (uri) => {
                 SELECT ${columnsJoined} FROM data_row
                 ON CONFLICT(id) ${updateClause}`;
 
+            console.log('STATEMENT');
+            console.log(statement);
             await client.query(statement, [JSON.stringify(with_id)]);
+            
+            console.log(with_id);
           } else if (op.op == 'PATCH') {
             const data = op.data;
             const with_id = { ...data, id: op.id ?? data.id };
